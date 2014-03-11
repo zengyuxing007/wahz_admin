@@ -1,0 +1,55 @@
+{include file="header.html"}
+{include file="sidebar.html"}
+{literal}
+<script>
+//时间代码
+$(function() {
+	$('.chosetime').datepicker({
+		dateFormat: 'yy-mm-dd', 
+		showButtonPanel: true
+	});
+});
+</script>
+{/literal}
+<div id="content">
+  <div class="pageTit">
+    <h2>{if $mainInfo}{$mainInfo.menu_name}{else}主菜单{/if}排序</h2>
+    <span class="desc">在此处您可以手动排列菜单的位置</span>
+    <span class="opt"><a href="menu">返回列表</a></span>
+  </div>
+  <div class="formBox">
+    <form action="menu/save_order" method="post" enctype="multipart/form-data">
+    <div class="row">
+      <div class="dataBox">
+        <table border="0" >
+        <thead>
+          <tr class="title">
+          <th width="55"><label>&nbsp;</label></th>
+          <th>栏目名称</th>
+          <th width="100">排序</th>
+          </tr>
+        </thead>
+        <tbody>
+        {foreach from=$menuOrder item=menus}
+          <tr>
+            <td>&nbsp;</td>
+            <td>{$menus.menu_name}</td>
+            <td><input type="text" name="order[{$menus.id}]" value="{$menus.view_order}" /></td>
+          </tr>
+        {/foreach}
+        </tbody>
+        </table>
+      </div>
+      
+      <div class="row btns">
+      {if $info}
+        <input type="submit" value="修改" class="sBtn" />
+      {else}
+        <input type="submit" value="保存" class="sBtn" />
+      {/if}
+        <input type="reset" value="重置" class="sBtn" />
+      </div>
+    </form>
+  </div><!-- /formBox -->
+</div><!-- /content -->
+{include file="footer.html"}

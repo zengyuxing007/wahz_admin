@@ -1,0 +1,71 @@
+{include file="header.html"}
+{include file="sidebar.html"}
+
+<link href="js/jquery-ui.css" rel="stylesheet" type="text/css"/>
+
+<script>
+{literal}
+$(function(){
+	var obj = $("#s_button");
+	obj.click(function(){
+		var kk_num = $("#s_kk_num").val();
+		if(kk_num == ''){
+			alert('kk号不正确');
+			return false;
+		}
+		JsRedirect(controller + '/' + action + '/' + kk_num);
+	})	
+
+	$("#mail_send_but").click(function(){
+		$("#send_form").toggle();
+	})
+})
+{/literal}
+</script>
+
+
+<div id="content">
+  <div class="pageTit">
+	  <h2>{$tpl.title}</h2>
+	  <span class="desc">{$tpl.desc}</span>
+	  {if $tpl.helper}
+	  <span class="opt"><a href="javascript:;">显示帮助</a></span>
+	  {/if}
+  </div>
+  {if $tpl.helper}
+  <div class="helper" style="display:none;">
+ 
+  </div>
+  {/if}
+
+  {if $no_upload}
+  <h1> First,upload news image </h1>
+  <form action="/upload/save" enctype="multipart/form-data" method="post" name="upform">
+  上传文件:
+  <input name="upfile" type="file">
+  <input type="submit" value="上传"><br>
+  允许上传的文件类型为: {$uptypes}
+  </form>
+  {if $error}
+	<br>Error:{$error}
+  {/if}
+  {/if}
+
+  
+  {if $upload}
+  <div class="dataBox" id="send_form">
+  	<div class="row">
+		<label class="label">图片</label>
+               URL: <h1>{$image_url}</h1> <br/>
+                {$image}
+	</div>
+	
+	<div class="row btns">
+        <br> <a href="/add_news/view">add new one </a>
+    </div>
+  </div>
+  {/if} 
+  
+</div><!-- /content -->
+{include file="footer.html"}
+

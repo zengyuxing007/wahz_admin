@@ -1,0 +1,1 @@
+var topurl = new Array("发发呆","发大水的");

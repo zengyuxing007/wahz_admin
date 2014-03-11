@@ -1,0 +1,66 @@
+{include file="header.html"}
+{include file="sidebar.html"}  
+{literal}
+<script>
+var url = 'user_role/del_all';
+</script>
+{/literal}
+<div id="content">
+        <div class="pageTit">
+          <h2>用户组列表</h2>
+          <span class="desc">您可以在这里对用户组进行管理。</span>
+          <span class="opt"><a href="user_role/add">添加用户组</a></span>
+        </div>
+        {if $role}
+        <div class="dataBox">
+          <table border="0" >
+          <thead>
+            <tr class="title">
+              <th width="55"><label><input type="checkbox" class="selectAll"/> 全选</label></th>
+              <th>用户组名称</th>
+              <th width="120">组成员数</th>
+              <th width="120" >用户组类型</th>
+              <th width="100">操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            {foreach from=$role item=rolevalue key=key}
+            {if $key%2}
+            <tr class="even select_s" id="list_{$rolevalue.id}">
+            {else}
+            <tr class="odd select_s" id="list_{$rolevalue.id}">
+            {/if}
+            <td><input type="checkbox" /></td>
+              <td>{$rolevalue.name}</td>
+              <td><a href="user/user_role&key=role_id&value={$rolevalue.id}">{$rolevalue.num}</a></td>
+              <td>{if $rolevalue.type eq 3}普通用户{elseif $rolevalue.type eq 2}客户{elseif $rolevalue.type eq 5}员工{elseif $rolevalue.type eq 4}经理{else}管理员{/if}</td>
+              <td>
+            	  {if $rolevalue.id eq 1}{else}<a href="user_role/edit&id={$rolevalue.id}">编辑</a>{/if}
+                  {if $rolevalue.id lt 8}
+                  {else}
+                  <a href="javascript:void(0);" class="deleteOne">删除</a>
+                  {/if}
+              </td>
+            </tr>
+            {/foreach}
+            </tbody>
+            <tr class="opt">
+              <td><label><input type="checkbox" class="selectAll"/> 全选</label></td>
+              <td colspan="5">
+              
+              <a href="javascript:void(0);" id="deleteAll">批量删除</a></td>
+              
+            </tr>
+            </table>
+        </div>
+        {else}
+        <div class="msgBox">
+            <div class="message info">
+            <span>友情提示</span>
+            对不起,暂无您所要的内容
+            </div>
+        </div>
+        {/if}
+</div>
+
+{include file="footer.html"}  

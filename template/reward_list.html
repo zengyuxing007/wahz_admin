@@ -1,0 +1,103 @@
+{include file="header.html"}
+{include file="sidebar.html"}
+
+<link href="js/jquery-ui.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="js/highcharts.js"></script>
+
+<script>
+{literal}
+var url = 'index.php?url=/reward/confirm_all/'
+$(function(){
+	var obj = $("#s_button");
+	obj.click(function(){
+		var kk_num = $("#s_kk_num").val();
+		if(kk_num == ''){
+			alert('kk号不正确');
+			return false;
+		}
+		JsRedirect(controller + '/' + action + '/' + kk_num);
+	})	
+})
+{/literal}
+</script>
+
+
+<div id="content">
+  <div class="pageTit">
+	  <h2>{$tpl.title}</h2>
+	  <span class="desc">{$tpl.desc}</span>
+	  {if $tpl.helper}
+	  <span class="opt"><a href="javascript:;">显示帮助</a></span>
+	  {/if}
+  </div>
+  {if $tpl.helper}
+  <div class="helper" style="display:none;">
+ 
+    奖励类型：---
+  </div>
+  {/if}
+  
+  {if $tpl.search}
+  <div class="search">
+	  输入兑换码：
+	  <input type="TEXT" value="{$smarty.get.kk_num}" name="kk_num" id="s_kk_num" />
+	  <input type="BUTTON" value="查询" id="s_button" />
+  </div>
+  {/if}
+  
+  <div class="dataBox" >
+	{if $reward_list}
+	<div class="dataBox">
+          <table border="0" >
+          <thead>
+            <tr class="title">
+              <th width="55"><label><input type="checkbox" class="selectAll"/> 全选</label></th>
+              <th>奖励ID</th>
+              <th >类型</th>
+			  <th>兑换码</th>
+			  <th>对应玩家信息</th>
+			  <!-- <th>图片</th> -->
+			  <th>玩家中奖时间</th>
+			  <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            {foreach from=$reward_list item=vo key=key}
+            {if $key%2}
+            <tr class="even select_s" id="list_{$vo.id}" >
+            {else}
+            <tr class="odd select_s" id="list_{$vo.id}" >
+            {/if}
+              <td><input type="checkbox" /></td>
+              <td>{$vo.id}</td>
+			  <td>{$vo.reward_type}</td>
+			  <td>{$vo.code|substr_fix:'30':'...'}</td>
+			  <td>{$vo.uid|get_user_info}</td>
+			  <td>{$vo.getTime|date_format:"%Y-%m-%d %T"}</td>  
+              <td>
+			  <!-- <a href="javascript:void(0);" id="delete">确认奖品已发放</a> -->
+              </td>
+			  
+            </tr>
+            {/foreach}
+            </tbody>
+            <tr class="opt">
+              <td><label><input type="checkbox" class="selectAll"/> 全选</label></td>
+              <td colspan="20">
+              <a href="javascript:void(0);" id="deleteAll">批量确认奖品已发放</a></td>
+            </tr>
+            </table>
+        </div>
+	{else}
+	<div class="msgBox">
+            <div class="message info">
+            <span>友情提示</span>
+            对不起,暂无您所要的内容
+            </div>
+        </div> 	
+	{/if}
+  </div>
+  
+  {include file="pager.html"}
+</div><!-- /content -->
+{include file="footer.html"}

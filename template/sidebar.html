@@ -1,0 +1,48 @@
+<script type="text/javascript">
+//<![CDATA[
+{literal}
+  $(function() {
+      var defaultMenu = 1;
+      var clickMenu = $.cookie('cMenu');
+      if (clickMenu == null) {
+      	clickMenu = defaultMenu;
+      }
+      $('.menu h2').each(function(i) {
+          if (i != clickMenu) {
+              $(this).next().get(0).style.display = 'none';
+          }
+          $(this).click(function() {
+              var ck = $(this).next().get(0);
+              if (ck.style.display == 'none') {
+                  $.cookie('cMenu', i, {expires: 3600 * 24 * 30, path: '/'});
+                  $('.menu h2').next().slideUp('fast');
+                  $(this).next().slideDown('fast');
+              } else {
+              	$('.menu h2').next().slideUp('fast');
+              }
+          });
+      });
+  });
+{/literal}
+//]]>
+</script>
+<div id="sideBar">
+  <div class="menu">
+    {foreach from=$side_menu item=menus}
+      {if $menus.parent_id eq 0}
+        {if $smarty.session.role_id eq 1 || $menus.id|in_array:$privileges}
+          <h2>{$menus.menu_name}</h2>
+          <ul >
+            {foreach from=$side_menu item=lists}
+              {if $lists.parent_id eq $menus.id}
+                {if $smarty.session.role_id eq 1 || $lists.id|in_array:$privileges}
+                  <li class="curr"><a href="{$lists.controller}{if $lists.action}/{$lists.action}{/if}">{$lists.menu_name}</a>{if $lists.add_name} <a class="add" href="{$lists.controller}/add">{$lists.add_name}</a>{/if}</li> 
+                {/if}
+              {/if}
+            {/foreach}
+          </ul>
+        {/if}
+      {/if}
+    {/foreach}
+  </div>
+</div><!-- /sideBar -->

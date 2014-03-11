@@ -1,0 +1,60 @@
+{include file="header.html"}
+{include file="sidebar.html"}
+{literal}
+<script>
+//时间代码
+$(function() {
+	$('.chosetime').datepicker({
+		dateFormat: 'yy-mm-dd', 
+		showButtonPanel: true
+	});
+
+	
+	if($("#role_id").val() == 2){
+		$("#attributebox").show();
+	}else{
+		$("#attributebox").hide();
+	}
+	$("#role_id").change(function(){
+		if($(this).val() == 2){
+			$("#attributebox").show();
+		}else{
+			$("#attributebox").hide();
+		}
+	});
+
+});
+</script>
+{/literal}
+<div id="content">
+        <div class="pageTit">
+          <h2>{$tpl.title}</h2>
+          <span class="desc"></span>
+          <span class="opt"><a href="/server_mail/my">返回列表 </a></span>
+        </div>
+
+        <div class="formBox">
+            <div class="row">
+              邮件主题：{$mail.subject}
+            </div>
+
+			<div class="row">发送人：{$mail.sender}</div>
+			<div class="row">投递时间：{$mail.deliver_time|date_format:"%Y-%m-%d %T"}</div>
+            
+            <div class="row">
+				邮件内容：{$mail.body}
+            </div>
+
+			<div class="row" >附件：<br>
+				{foreach from=$mail_item item=vo}
+					道具ID：{$vo.item_id} 数量：{$vo.item_count}<br>
+				{/foreach}
+			</div>
+
+			<div class="row btns">
+				<a href="/server_mail/reply/{$mail.sender}" class="sBtn">回复</a>
+			</div>
+
+        </div><!-- /formBox -->
+      </div><!-- /content -->
+{include file="footer.html"}

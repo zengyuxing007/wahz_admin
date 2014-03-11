@@ -1,0 +1,100 @@
+{include file="header.html"}
+{include file="sidebar.html"}
+
+<link href="js/jquery-ui.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="js/highcharts.js"></script>
+
+<script>
+{literal}
+$(function(){
+	var obj = $("#s_button");
+	obj.click(function(){
+		var kk_num = $("#s_unique_id").val();
+		var phone_no = $("#s_phone_no").val();
+		if(kk_num == '' && phone_no == ''){
+			alert('查询条件不能为空，请指定uniqueid 或 手机号');
+			return false;
+		}
+		JsRedirect(controller + '/' + action + '&unique_id=' + kk_num + '&phone_no=' + phone_no );
+	})	
+
+})
+{/literal}
+</script>
+
+
+<div id="content">
+  <div class="pageTit">
+	  <h2>{$tpl.title}</h2>
+	  <span class="desc">{$tpl.desc}</span>
+	  {if $tpl.helper}
+	  <span class="opt"><a href="javascript:;">显示帮助</a></span>
+	  {/if}
+  </div>
+  {if $tpl.helper}
+  <div class="helper" style="display:none;">
+  </div>
+  {/if}
+  
+  <div class="search">
+	查询条件<br>
+	  Unique ID ： <input type="TEXT" value="" name="unique_id" id="s_unique_id" />
+
+	 或 手机号： <input type="TEXT" value="" name="phone_no" id="s_phone_no" />
+	  <input type="BUTTON" value="查询" id="s_button" />
+  </div>
+  
+  <div class="dataBox" >
+{if $info}
+  	<div class="dataBoxLeft">
+	  	<div class="row">
+	  		<label >unique id：</label>
+	  		<label class="block">{$info.unique_id}</label>
+	  	</div>
+	  	<div class="row">
+	  		<label >昵称：</label>
+	  		<label class="block">{$info.user_name}</label>
+	  	</div>
+	  	<div class="row">
+	  		<label >手机号：</label>
+            <label class="block">{$info.phone_no}</label>
+	  	</div>
+	  	<div class="row">
+	  		<label >地址：</label>
+	  		<label class="block"> {$info.address}</label>
+	  	</div>
+	  	<div class="row">
+	  		<label >邮编：</label>
+	  		<label class="block"> {$info.zcode}</label>
+	  	</div>
+	  	<div class="row">
+	  		<label >更新时间：</label>
+	  		<label class="block">{$info.update_time|date_format:"%Y-%m-%d %T"}</label>
+	  	</div>
+
+	    <div class="row">
+            <label>中奖信息:</label>
+            <label class="block">
+			{if $reward_info}
+				{foreach from=$reward_info item=vo}
+				<p class="block">
+				获取时间：{$vo.getTime|date_format:"%Y-%m-%d %T"} 
+				奖品类型： {$vo.reward_type|config_name:'config_reward'}--{$vo.reward_type}
+                兑换码：{$vo.code}
+				状态： {if $vo.is_use== 2} 奖品已邮寄 {else} 用户信息核实中 {/if}
+				</p>
+               {/foreach}
+			{else}
+				<br> 没有中奖信息
+			{/if}
+            </label>
+        </div>	
+  	</div>
+{else}
+
+{/if}
+  </div>
+  
+  
+</div><!-- /content -->
+{include file="footer.html"}

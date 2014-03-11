@@ -1,0 +1,75 @@
+{include file="header.html"}
+{include file="sidebar.html"}  
+{literal}
+<script>
+var url = 'index.php?url=user/del/';
+</script>
+{/literal}
+<div id="content">
+        <div class="pageTit">
+          <h2>用户列表</h2>
+          <span class="desc">您可以在这里对用户进行管理。</span>
+          <span class="opt"><a href="/user/add">添加用户</a></span>
+        </div>
+        <div class="search">
+          <form action="user/search" method="get">
+            <select name="role_id">
+            { foreach from=$role item=rolevalue }
+            <option value="{$rolevalue.id}">{$rolevalue.name}</option>
+            {/foreach}
+            </select>
+            <input type="text" name="keyword" id="search" />
+            <input type="submit" value="搜索" />
+          </form>
+        </div>
+        {if $user}
+        <div class="dataBox">
+          <table border="0" >
+          <thead>
+            <tr class="title">
+              <th width="55"><label><input type="checkbox" class="selectAll"/> 全选</label></th>
+              <th>用户名称</th>
+              <th width="120" >用户组</th>
+              <th width="120" >注册时间</th>
+              <th width="100">操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            {foreach from=$user item=uservalue key=key}
+            {if $key%2}
+            <tr class="even select_s" id="list_{$uservalue.id}">
+            {else}
+            <tr class="odd select_s" id="list_{$uservalue.id}">
+            {/if}
+            <td><input type="checkbox" /></td>
+              <td>{$uservalue.user_name}</td>
+              <td><a href="user/user_role&key=role_id&value={$uservalue.role_id}">name</a></td>
+              <td>{$uservalue.add_time}</td>
+              <td>
+                  <a href="user/edit&id={$uservalue.id}">编辑</a>
+                  <a href="javascript:void(0);" class="deleteOne">删除</a>
+              </td>
+            </tr>
+            {/foreach}
+            </tbody>
+            <tr class="opt">
+              <td><label><input type="checkbox" class="selectAll"/> 全选</label></td>
+              <td colspan="5">
+              
+              <a href="javascript:void(0);" id="deleteAll">批量删除</a></td>
+              
+            </tr>
+            </table>
+        </div>
+        {else}
+        <div class="msgBox">
+            <div class="message info">
+            <span>友情提示</span>
+            对不起,暂无您所要的内容
+            </div>
+        </div>
+        {/if}
+        {include file="pager.html"}
+</div>
+
+{include file="footer.html"}  

@@ -1,0 +1,47 @@
+{include file="header.html"}
+{include file="sidebar.html"}
+
+<link href="js/jquery-ui.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="js/highcharts.js"></script>
+
+<script>
+{literal}
+$(function(){
+	var obj = $("#s_button");
+	obj.click(function(){
+		var message = $("#s_message").val();
+		if(message == ''){
+			alert('发送消息不能为空');
+			return false;
+		}
+		JsRedirect(controller + '/' + action + '&message=' + message);
+	})	
+
+})
+{/literal}
+</script>
+
+
+<div id="content">
+  <div class="pageTit">
+	  <h2>{$tpl.title}</h2>
+	  <span class="desc">{$tpl.desc}</span>
+	  {if $tpl.helper}
+	  <span class="opt"><a href="javascript:;">显示帮助</a></span>
+	  {/if}
+  </div>
+  {if $tpl.helper}
+  <div class="helper" style="display:none;">
+  </div>
+  {/if}
+   <div> 
+	消息：<br>
+	 <!-- <input type="TEXT" m value="" name="message" id="s_message" /> -->
+    <textarea class="wide" name="message" id="s_message" rows="8" style="margin: 2px; width: 554px; height: 153px;"></textarea> <br>
+	  <input type="BUTTON" value="发送" id="s_button" />
+  
+  </div>
+  
+  
+</div><!-- /content -->
+{include file="footer.html"}

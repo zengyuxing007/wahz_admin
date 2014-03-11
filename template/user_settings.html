@@ -1,0 +1,70 @@
+{include file="header.html"}
+{include file="sidebar.html"}
+{literal}
+<script>
+//时间代码
+$(function() {
+	$('.chosetime').datepicker({
+		dateFormat: 'yy-mm-dd', 
+		showButtonPanel: true
+	});
+
+	
+	if($("#role_id").val() == 2){
+		$("#attributebox").show();
+	}else{
+		$("#attributebox").hide();
+	}
+	$("#role_id").change(function(){
+		if($(this).val() == 2){
+			$("#attributebox").show();
+		}else{
+			$("#attributebox").hide();
+		}
+	});
+});
+</script>
+{/literal}
+<div id="content">
+        <div class="pageTit">
+          <h2>个人设置</h2>
+          <span class="desc">在此处您可以设置您的个人资料</span>
+        </div>
+        <div class="formBox">
+          <form action="user/save&method=usersetting" method="post" enctype="multipart/form-data">
+            {if $info}
+            <input type="hidden" name="id" value="{$info.id}"></input>
+            {/if}
+            <div class="row">
+              <label for="user_name" class="label">用户名称</label>
+              <input type="text" name="user_name" class="sInput mid" disabled="disabled" value="{$info.user_name}" />
+            </div>
+            
+            <div class="row">
+              <label for="pwd" class="label">新密码</label>
+              <input type="password" name="pwd" class="sInput mid" value="" />
+            </div>
+            
+            <div class="row">
+              <label for="email" class="label">邮箱</label>
+              <input type="text" name="email" value="{$info.email}" class="sInput mid" />
+            </div>
+            
+            <div class="row">
+              <label for="mobile" class="label">手机号</label>
+              <input type="text" name="mobile" value="{$info.mobile}" class="sInput mid" />
+            </div>
+            
+          
+            <div class="row btns">
+            {if $info}
+              <input type="submit" value="修改" class="sBtn" />
+            {else}
+              <input type="submit" value="保存" class="sBtn" />
+            {/if}
+              <input type="reset" value="重置" class="sBtn" />
+            </div>
+          </form>
+        </div><!-- /formBox -->
+      </div><!-- /content -->
+{include file="footer.html"}

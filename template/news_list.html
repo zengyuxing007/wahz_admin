@@ -1,0 +1,107 @@
+{include file="header.html"}
+{include file="sidebar.html"}
+
+<link href="js/jquery-ui.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="js/highcharts.js"></script>
+
+<script>
+{literal}
+var url = 'index.php?url=/news_info/del_all/'
+$(function(){
+	var obj = $("#s_button");
+	obj.click(function(){
+		var kk_num = $("#s_kk_num").val();
+		if(kk_num == ''){
+			alert('kk号不正确');
+			return false;
+		}
+		JsRedirect(controller + '/' + action + '/' + kk_num);
+	})	
+})
+{/literal}
+</script>
+
+
+<div id="content">
+  <div class="pageTit">
+	  <h2>{$tpl.title}</h2>
+	  <span class="desc">{$tpl.desc}</span>
+	  {if $tpl.helper}
+	  <span class="opt"><a href="javascript:;">显示帮助</a></span>
+	  {/if}
+  </div>
+  {if $tpl.helper}
+  <div class="helper" style="display:none;">
+ 
+    新闻类型：1: 普通新闻 2: 推荐新闻
+  </div>
+  {/if}
+  
+  {if $tpl.search}
+  <div class="search">
+	  输入新闻ID ：
+	  <input type="TEXT" value="{$smarty.get.kk_num}" name="kk_num" id="s_kk_num" />
+	  <input type="BUTTON" value="查询" id="s_button" />
+  </div>
+  {/if}
+  
+  <div class="dataBox" >
+	{if $news_list}
+	<div class="dataBox">
+          <table border="0" >
+          <thead>
+            <tr class="title">
+              <th width="55"><label><input type="checkbox" class="selectAll"/> 全选</label></th>
+              <th>新闻ID</th>
+              <th >类型</th>
+			  <th>标题</th>
+			  <th>内容</th>
+			  <!-- <th>图片</th> -->
+			  <th>发布时间</th>
+			  <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            {foreach from=$news_list item=vo key=key}
+            {if $key%2}
+            <tr class="even select_s" id="list_{$vo.id}" >
+            {else}
+            <tr class="odd select_s" id="list_{$vo.id}" >
+            {/if}
+              <td><input type="checkbox" /></td>
+              <td>{$vo.id}</td>
+			  <td>{$vo.type}</td>
+			  <td>{$vo.title|substr_fix:'30':'...'}</td>
+			  <td>{$vo.content|substr_fix:'60':'...'}</td>
+			  <!-- <td>{$vo.image_url|substr_fix:'30':'...'}</td> -->
+			  <td>{$vo.create_time|date_format:"%Y-%m-%d %T"}</td>  
+              <td>
+              <a href="/news_info/news_detail/{$vo.id}/#">查看</a> 
+			  <!--|  <a href="">编辑</a> |
+			  <a href="">删除</a>
+			  -->
+              </td>
+			  
+            </tr>
+            {/foreach}
+            </tbody>
+            <tr class="opt">
+              <td><label><input type="checkbox" class="selectAll"/> 全选</label></td>
+              <td colspan="20">
+              <a href="javascript:void(0);" id="deleteAll">批量删除</a></td>
+            </tr>
+            </table>
+        </div>
+	{else}
+	<div class="msgBox">
+            <div class="message info">
+            <span>友情提示</span>
+            对不起,暂无您所要的内容
+            </div>
+        </div> 	
+	{/if}
+  </div>
+  
+  {include file="pager.html"}
+</div><!-- /content -->
+{include file="footer.html"}

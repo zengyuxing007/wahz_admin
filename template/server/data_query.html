@@ -1,0 +1,96 @@
+{include file="header.html"}
+{include file="sidebar.html"}
+
+<link href="js/jquery-ui.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="js/highcharts.js"></script>
+
+<script>
+{literal}
+$(function(){
+	var obj = $("#s_button");
+	obj.click(function(){
+		var sql = $("#s_sql").val();
+		if(sql == ''){
+			alert('你什么也没有输入哦');
+			return false;
+		}
+		var encode_sql = encodeURI(sql);
+		//alert('sql:'+ sql);
+		JsRedirect(controller + '/' + action + '&sql=' + encode_sql);
+	})	
+
+})
+{/literal}
+</script>
+
+
+<div id="content">
+  <div class="pageTit">
+	  <h2>{$tpl.title}</h2>
+	  <span class="desc">{$tpl.desc}</span>
+	  {if $tpl.helper}
+	  <span class="opt"><a href="javascript:;">显示帮助</a></span>
+	  {/if}
+  </div>
+  {if $tpl.helper}
+  <div class="helper" style="display:none;">
+  </div>
+  {/if}
+  
+  <div class="search">
+	  输入查询语句 ：
+	  <input type="TEXT" width="128" size="128" value="" name="sql" id="s_sql" />
+	  <input type="BUTTON" value="查询" id="s_button" />
+  </div>
+  <div>
+    你输入的查询语句 : {$youInputSql} <br/>
+    结果：{$count} records. <br/>
+  </div>
+
+  <div class="dataBox" >
+	{if $info}
+	<div class="dataBox">
+          <table border="0" >
+          <thead>
+            <tr class="title">
+              <th width="55"><label><input type="checkbox" class="selectAll"/> 全选</label></th>
+            {foreach from=$column item=co key=key}
+	    <th>{$co}</th>
+            {/foreach}
+	    </tr>
+            </thead>
+            <tbody>
+            {foreach from=$info item=record key=key}
+            {if $key%2}
+            <tr class="even select_s" id="list_{$vo.id}" >
+            {else}
+            <tr class="odd select_s" id="list_{$vo.id}" >
+            {/if}
+	    <td><input type="checkbox" /></td>
+            {foreach from=$column item=co key=key}
+	    <td>{$record.$co}</td>
+            {/foreach}
+	  </tr>
+            {/foreach}
+            </tbody>
+            <tr class="opt">
+              <td><label><input type="checkbox" class="selectAll"/> 全选</label></td>
+            </tr>
+            </table>
+        </div>
+	{else}
+	<div class="msgBox">
+            <div class="message info">
+            <span>友情提示</span>
+	    对不起,暂无您所要的内容</br>
+	    {$msg} </br>
+	    {$column} </br>
+	    
+            </div>
+        </div> 	
+	{/if}
+  </div>
+  
+  {include file="pager.html"}
+</div><!-- /content -->
+{include file="footer.html"}

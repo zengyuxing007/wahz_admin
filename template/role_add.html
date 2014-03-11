@@ -1,0 +1,75 @@
+{include file="header.html"}
+{include file="sidebar.html"}
+{literal}
+<script>
+$(function(){
+    $(".checkeds").click(
+    	function(){
+        	$(this).siblings(".oneChecked").attr("checked",true);
+    	});
+	$(".oneChecked").click(function(){
+      if ($(this).attr("checked") == true) {
+        $(this).siblings(".checkeds").attr("checked",true);
+      } else {
+        $(this).siblings(".checkeds").attr("checked",false);
+      }
+	})
+
+});
+</script>
+{/literal}
+<div id="content">
+        <div class="pageTit">
+          <h2>用户组管理</h2>
+          <span class="desc">在此处您可以手动添加用户组</span>
+          <span class="opt"><a href="role">返回列表 </a></span>
+        </div>
+        <div class="formBox">
+          <form action="user_role/save" method="post" enctype="multipart/form-data">
+            {if $info}
+            <input type="hidden" name="id" value="{$info.id}"></input>
+            {/if}
+            <div class="row">
+              <label for="name" class="label">用户组名称</label>
+              <input type="text" name="name" class="sInput mid" value="{$info.name}" />
+            </div>
+
+            <div class="row">
+              <label for="name" class="label">用户组类别</label>
+              <select class="select mid" name="type">
+              <option {if $info.type eq 1}selected="selected"{/if} value="1">管理员</option>
+              <option {if $info.type eq 2}selected="selected"{/if} value="2">客户</option>
+              <option {if $info.type eq 3}selected="selected"{/if} value="3">普通用户</option>
+              <option {if $info.type eq 4}selected="selected"{/if} value="4">经理</option>
+              <option {if $info.type eq 5}selected="selected"{/if} value="5">员工</option>
+              </select>
+            </div>
+            
+            <div class="row">
+              <label for="name" class="label">用户组权限</label>
+              {foreach from=$role item=ros}
+              {if $ros.parent_id eq 0}
+                  <div class="row">
+                  <input type="checkbox" name="privilege[]" {if $roleArray}{if $ros.id|in_array:$roleArray}checked="checked" {/if}{/if} class="sInput oneChecked" value="{$ros.id}" />{$ros.menu_name}<br>
+                      {foreach from=$role item=ro}
+                          {if $ro.parent_id eq $ros.id}
+                          <input type="checkbox" name="privilege[]" {if $roleArray}{if $ro.id|in_array:$roleArray}checked="checked" {/if}{/if} class="sInput checkeds" value="{$ro.id}" />{$ro.menu_name}
+                          {/if}
+                      {/foreach}
+                  </div>
+              {/if}
+              {/foreach}
+            </div>
+            
+            <div class="row btns">
+            {if $info}
+              <input type="submit" value="修改" class="sBtn" />
+            {else}
+              <input type="submit" value="保存" class="sBtn" />
+            {/if}
+              <input type="reset" value="重置" class="sBtn" />
+            </div>
+          </form>
+        </div><!-- /formBox -->
+      </div><!-- /content -->
+{include file="footer.html"}

@@ -1,0 +1,40 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>管理中心</title>
+  <base href="{$smarty.const.SITE_URL}/" />
+  <link rel="stylesheet" href="css/style.css" type="text/css" />
+  <script type="text/javascript">
+{literal}
+var obj = document.getElementById('username');
+window.onload = function(){document.form1.username.focus();}
+//obj.focus();
+{/literal}
+  </script>
+</head>
+
+<body>
+  <div class="signBox">
+    <h2>管理中心</h2>
+    <div class="inner">
+      <form action="/login/save" name="form1" method="post">
+        <div class="row">
+          <label for="username" class="label">账号</label>
+          <input type="text" name="username" id="username" class="sInput error mid" />
+          <label for="username" class="desc error">必须输入用户名</label>
+        </div>
+        <div class="row">
+          <label for="password" class="label">密码</label>
+          <input type="password" name="password" id="password" class="sInput mid" />
+        </div>
+        <div class="row">
+          <input type="submit" value="登录" class="sBtn" />
+        </div>
+      </form>
+    </div>
+  </div>
+</body>
+</html>

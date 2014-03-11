@@ -1,0 +1,32 @@
+{include file="header.html"}
+
+{include file="sidebar.html"}
+
+<div id="content">
+<div class="pageTit">
+  <h2>提示消息</h2>
+</div>
+  <div class="msgBox">
+    <div class="message {$type}">
+      <span>
+        {if $type=='success'}
+          成功!
+        {elseif $type=="error"}
+          错误! 
+        {elseif $type=="notice"}
+          提示!
+        {else}信息!
+        {/if}
+      </span>
+      {$msg}
+      <span class="btns">
+      {if $jumpurl}
+        <a href="{$jumpurl}">点击此处跳转</a>
+      {else}
+        <a href="javascript:history.go(-1)">返回上一页</a>
+      {/if}
+      </span>
+    </div>
+  </div>
+</div><!-- /content -->
+{include file="footer.html"}

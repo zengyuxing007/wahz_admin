@@ -1,0 +1,94 @@
+{include file="header.html"}
+{include file="sidebar.html"}
+{literal}
+<script>
+$(function() {
+    if ($("#parent_id").val() != 0) {
+		$("#parentbox").show();
+    } else {
+    	$("#parentbox").hide();
+    }
+
+    $("#parent_id").change(function(){
+		if($(this).val() == 0){
+			$("#parentbox").hide();
+		}else{
+			$("#parentbox").show();
+		}
+	});
+});
+</script>
+{/literal}
+<div id="content">
+  <div class="pageTit">
+    <h2>标签管理</h2>
+    <span class="desc">在此处您可以手动添加标签</span>
+    <span class="opt"><a href="menu/tag">返回列表 </a></span>
+  </div>
+  <div class="formBox">
+    <form action="menu/save" method="post" enctype="multipart/form-data">
+      {if $info}
+      <input type="hidden" name="id" value="{$info.id}"></input>
+      {/if}
+      
+      <div class="row">
+        <label for="menu_name" class="label">菜单名称</label>
+        <input type="text" name="menu[menu_name]" class="sInput wide" value="{$info.menu_name}" />
+      </div>
+                  
+      <div class="row">
+        <label for="parent_id" class="label">上级菜单</label>
+        <select name="menu[parent_id]" id="parent_id">
+        <option {if 0 eq $info.parent_id}selected="selected" {/if} value="0">新增顶级菜单</option>
+        {foreach from=$menu_list item=parentvalue}
+            <option {if $parentvalue.id eq $info.parent_id}selected="selected" {/if} value="{$parentvalue.id}">{$parentvalue.menu_name}</option>
+        {/foreach}
+        </select>
+      </div>
+      
+      <div class="row" id="parentbox">
+      <div class="row">
+        <label for="add_name" class="label">附加菜单名称</label>
+        <input type="text" name="menu[add_name]" class="sInput wide" value="{$info.add_name}" />
+      </div>
+      
+      <div class="row">
+        <label for="controller" class="label">控制器名称</label>
+        <input type="text" name="menu[controller]" class="sInput wide" value="{$info.controller}" />
+      </div>
+      
+      <div class="row">
+        <label for="action" class="label">操作名称</label>
+        <input type="text" name="menu[action]" class="sInput wide" value="{$info.action}" />
+      </div>
+      
+      <div class="row">
+        <label for="res_type" class="label">资源类型</label>
+        <input type="text" name="menu[res_type]" class="sInput wide" value="{$info.res_type	}" />
+      </div>
+      
+      <div class="row">
+        <label for="view_order" class="label">顺序排列</label>
+        <input type="text" name="menu[view_order]" class="sInput wide" value="{if $info.view_order}{$info.view_order}{else}0{/if}" />
+      </div>
+
+	  <div class="row">
+        <label for="is_show" class="label">是否显示</label>
+		显示：<input type="radio" name="menu[is_show]" value="1" {if $info.is_show}checked=true{/if}>
+		隐藏：<input type="radio" name="menu[is_show]" value="0" {if !$info.is_show}checked=true{/if}>
+      </div>
+
+      </div>
+      
+      <div class="row btns">
+      {if $info}
+        <input type="submit" value="修改" class="sBtn" />
+      {else}
+        <input type="submit" value="保存" class="sBtn" />
+      {/if}
+        <input type="reset" value="重置" class="sBtn" />
+      </div>
+    </form>
+  </div><!-- /formBox -->
+</div><!-- /content -->
+{include file="footer.html"}

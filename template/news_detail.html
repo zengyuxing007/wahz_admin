@@ -1,0 +1,53 @@
+{include file="header.html"}
+{include file="sidebar.html"}
+{literal}
+<script>
+//时间代码
+$(function() {
+	$('.chosetime').datepicker({
+		dateFormat: 'yy-mm-dd', 
+		showButtonPanel: true
+	});
+
+	
+	if($("#role_id").val() == 2){
+		$("#attributebox").show();
+	}else{
+		$("#attributebox").hide();
+	}
+	$("#role_id").change(function(){
+		if($(this).val() == 2){
+			$("#attributebox").show();
+		}else{
+			$("#attributebox").hide();
+		}
+	});
+
+});
+</script>
+{/literal}
+<div id="content">
+        <div class="pageTit">
+          <h2>{$tpl.title}</h2>
+          <span class="desc"></span>
+          <span class="opt"><a href="/news_info/news_list">返回列表 </a></span>
+        </div>
+
+        <div class="formBox">
+            <div class="row">
+              新闻标题：{$news.title}
+            </div>
+
+			<div class="row">发表时间：{$news.create_time|date_format:"%Y-%m-%d %T"}</div>
+		
+			<div class="row">
+			   <img src="http://app.setv.sh.cn/uploadimg/{$news.image_url}">
+			</div>
+            
+            <div class="row">
+				新闻内容:{$news.content}
+            </div>
+
+        </div><!-- /formBox -->
+      </div><!-- /content -->
+{include file="footer.html"}

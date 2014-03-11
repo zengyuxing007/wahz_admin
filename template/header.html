@@ -1,0 +1,42 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <base href="{$smarty.const.SITE_URL}/" />
+  <title>管理中心</title>
+    <link rel="stylesheet" href="css/style.css" type="text/css" />
+    <link rel="stylesheet" href="css/jquery-ui.css" type="text/css"/>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="js/jquery.cookie.min.js"></script>
+ 
+    <!-- 后台公用js -->
+    <script type="text/javascript" src="js/admin.js"></script>
+    <script>
+    var site_url = "{$smarty.const.SITE_URL}";
+    var controller = "{$controller}";
+    var action = "{$action}";
+    var kk_num = "{$stat_kk_num}";
+    var _thisUrl = document.URL; 
+    {literal}
+	$(function(){
+		if(kk_num){
+			$("input[name=kk_num]").val(kk_num)
+		}
+	})
+    {/literal}
+    </script>
+</head>
+
+<body>
+  <div id="wrapper">
+    <div id="header">
+      <span class="logo"><a href="admin">管理中心</a></span>
+      <ul class="quickNav">
+        <li class="first">欢迎回来，<a href="#">{$smarty.session.user_name}</a></li>
+        <li>个人设置</li>
+        <li><a href="/">网站首页</a></li>
+        <li><a href="/login/logout">退出</a></li>
+      </ul>
+    </div><!-- /header -->
+    <div id="container">

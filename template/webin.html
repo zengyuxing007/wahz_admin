@@ -1,0 +1,133 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>{$title}</title>
+<meta name="Keywords" content="{$keyword}"/>
+<meta name="description" content="{$description}" />
+{literal}
+<style type="text/css">
+body{padding:0;margin:0;font-size:12px; background-color:#000000;text-align:center}div{padding:0;margin:0 auto}ul,li { list-style-type:none;padding:0;margin:0 auto}
+.main{ width:1000px; height:600px;margin: 0 auto;}
+.reg_c,.lg_c{width:392px;height:207px; overflow:hidden;}
+.reg_c ul li,.lg_c ul li{display:block;width:390px;height:37px;float:left;}
+.titl{margin:5px 0 16px 0px;width:392px;height:44px;display:block;}
+.lg{display:block;width:152px;height:24px;background:url(http://n.7k7kimg.cn/uploads/dialog/lg1.gif) no-repeat;float:left;
+margin:18px 0 0 8px;cursor:pointer;}
+.reg{display:block;width:152px;height:24px;background:url(http://n.7k7kimg.cn/uploads/dialog/reg2.gif) no-repeat;float:left;
+margin:18px 0 0 33px;cursor:pointer;_margin:18px 0 0 18px;}
+.lg1{display:block;width:152px;height:24px;background:url(http://n.7k7kimg.cn/uploads/dialog/lg2.gif) no-repeat;float:left;
+margin:18px 0 0 8px;;cursor:pointer;}
+.reg1{display:block;width:152px;height:24px;background:url(http://n.7k7kimg.cn/uploads/dialog/reg1.gif) no-repeat;float:left;
+margin:18px 0 0 33px;_margin:18px 0 0 18px;cursor:pointer;}
+.reg_txt{font-size:14px;text-align:right;display:block;float:left;width:100px;height:20px;line-height:20px;color:#d7cbb9;}
+.reg_info{color:red;text-align:center;display:block; height:30px; line-height:30px;font-weight:bold;}
+.rl_input{display:block;float:left;width:130px;height:18px;border:2px solid #a08e74;}
+.r_t{width:138px;height:28px;float:left;display:block;text-align:left;float:left;color:#d7cbb9;line-height:28px;margin-left:2px;}
+.submit_reg{background:url(http://n.7k7kimg.cn/uploads/dialog/enter.gif) no-repeat;width:143px;height:34px;display:block;float:left;margin-left:15px;_margin-left:10px;}
+.submit_login{background:url(http://n.7k7kimg.cn/uploads/dialog/enter.gif) no-repeat;width:143px;height:34px;display:block;float:left;margin-left:15px;_margin-left:10px;}
+.btns{width:192px;height:40px;margin-left:100px;}
+.serverstatus{margin-left:35px; font-size:14px; color:#333; font-weight:bold;width:348px;line-height:25px;height:288px;}
+.serverstatus a{text-decoration:none; color: #FFF; width:100%;height:35px;display:block;float:left;}
+.s_tit{display:block;width:348px;height:47px;line-height:47px;text-align:center;font-size:16px;font-weight:bold;color:#d7cbb9;margin-bottom:15px;}
+#logintip{width:398px;height:288px;}
+.serverstatus a:hover{ text-decoration:none; color:#d7cbb9; }
+#bg{ display:none;width:100%;height:100%;top:0px;left:0px;right:0;position:absolute;filter: Alpha(opacity=50);opacity:0.5; background:#000;z-index:9998}
+#popbox{display:none;width:398px;height:288px;left:0;top:0; background:url(http://n.7k7kimg.cn/uploads/dialog/box_bg_1.jpg) #181717 no-repeat;position:absolute;z-index:9999} 
+<!--注册或者登陆后设置的div-->
+
+</style>
+<script language="javascript">
+function show(){
+	var _b = document.getElementById("bg");
+	_b.style.width = document.documentElement.scrollWidth+"px";
+	_b.style.height = document.documentElement.scrollHeight+"px";
+	_b.style.display = "block";
+	var _p = document.getElementById("popbox");
+	_p.width = 472;	_p.height = 373;
+	_p.style.left = (document.documentElement.offsetWidth - _p.width)/2 + "px";
+	_p.style.top = (701- _p.height)/2 + "px";
+	_p.style.display = "block";
+}
+document.onclick = function start(){show()};
+</script>
+<script language="javascript">
+function setBar(opt)
+{
+	if(opt=='lg'){
+		document.getElementById("login").style.display = "block";
+		document.getElementById("reg").style.display = "none";
+		document.getElementById("lg").className="lg1";	
+		document.getElementById("register").className="reg1";
+	}
+	if(opt=='reg'){
+		document.getElementById("reg").style.display = "block";
+		document.getElementById("login").style.display = "none";
+		document.getElementById("lg").className="lg";	
+		document.getElementById("register").className="reg";
+	}
+}
+</script>
+<!--[if IE 6]>
+        <script src="/js/pngAlaph.js"></script>
+        <script>
+            DD_belatedPNG.fix('#reg,#login,img');
+        </script>
+<![endif]-->
+{/literal}
+</head>
+<body>
+<iframe id="iframe_nav" name="iframe" src="/nav/index3.html" width="100%" height="46" frameborder="0" border="0" marginwidth="0" marginheight="0" scrolling="no" target="_blank"></iframe>
+<div id="bg"></div>
+<div id="popbox">
+	<div id="logintip">
+		<ul class="titl"><li class="reg" id="register" onclick="setBar('reg')"></li><li class="lg" id="lg" onclick="setBar('lg')"></li></ul>
+		<div class="lg_c"  id="login" style="display:none;">
+		<form action="/source/Post.php"  method="post" id="loginform" name="loginform">
+			<ul >
+				<li><span class="reg_txt"><b>用户名：</b></span><input class="rl_input" type="text" class="input" name="user" id="user"  /><span class="r_t" id="loginmsg">请输入您的7k7k通行证</span></li>
+
+				<li><span class="reg_txt"><b>密&nbsp;&nbsp;&nbsp;&nbsp;码：</b></span><input class="rl_input"  type="password" name="pass" id="pass"/><span class="r_t" id="loginpass">请输入您的密码</span>
+				<li class="reg_info">强烈建议完善资料,以保护帐号安全</li>
+				<li></li>			
+			</ul>
+			<div class="btns"><input name="action2" type="hidden" id="action2" value="login" /><input name="refer" type="hidden" id="refer" value="" /></a><a href="#none" onclick="javascript:checklogin2();" class="submit_login" id="loginbtn2" name="loginbtn2" title="点击登陆"></a></div>
+		</form>
+		</div>
+
+	<div class="reg_c" id="reg">
+		<form action="/source/Post.php"  method="post" id="regform" name="regform">
+			<ul>
+				<li><span class="reg_txt"><b>用 户 名：</b></span><input class="rl_input" type="text" name="username" id="username" onblur="return checkusername();"/><span class="r_t" id="usermsg">请记住您的7k7k通行证</span><span style="color:#fff;padding-left:97px" class="r_t">建议用您的手机号或QQ</span></li>
+				<li style='padding-top:15px;_padding-top:3px;'><span class="reg_txt"><b>密&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;码：</b></span><input class="rl_input" type="password"  name="password" id="password" onblur="return checkpassword();"/><span class="r_t" id="passmsg">建议使用字母+数字</span></li></li>
+				<li><span class="reg_txt"><b>确认密码：</b></span><input class="rl_input" type="password" name="confirmpassword" id="confirmpassword" onblur="return checkconfirm();"/><span class="r_t" id="conmsg">请再次输入密码</span></li>
+
+				<li class="reg_info">强烈建议完善资料,以保护帐号安全</li>
+			</ul>
+		<div class="btns"><input name="refer" type="hidden" id="refer" value="" /><input name="action" type="hidden" id="action" value="register" /><a href="#none" onclick="javascript:checklogin();" class="submit_reg" id="loginbtn" name="loginbtn" title="点击注册"></a></div>
+		</form>
+		</div>
+	</div>
+</div>
+<div class="main"  >
+ 		<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash.cab#version=9,0,28,0"  width="1000" height="600" >
+
+             <param name="movie" value="{$inflash}" />
+             <param name="allowScriptAccess" value="always" />
+             <param name="wmode" value="transparent" />
+             <param name="quality" value="high" />
+             <embed allowScriptAccess="always"  src="{$inflash}" quality="high" pluginspage="http://www.adobe.com/shockwave/download/download.cgi?P1_Prod_Version=ShockwaveFlash" type="application/x-shockwave-flash" width="1000" height="600" wmode="transparent" ></embed>
+          </object>	         	          
+</div>
+
+<script type="text/javascript">
+var target = '{$target}'; var server_id ={$serverid};  //新注册跳转的游戏标志id和区服
+{$areainfo}
+</script>
+<script type="text/javascript" src="/js/interface_reg_login.js?v=9"></script>
+<div style="display:none;">
+{$cnzz}
+<script src='http://w.cnzz.com/c.php?id=30008588' language='JavaScript' charset='gb2312'></script>
+</div>
+</body>
+</html>

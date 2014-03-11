@@ -1,0 +1,94 @@
+{include file="header.html"}
+{include file="sidebar.html"}
+
+<link href="js/jquery-ui.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="js/highcharts.js"></script>
+
+<script>
+{literal}
+$(function(){
+	var obj = $("#s_button");
+	obj.click(function(){
+		var kk_num = $("#s_kk_num").val();
+		if(kk_num == ''){
+			alert('kk号不正确');
+			return false;
+		}
+		JsRedirect(controller + '/' + action + '/' + kk_num);
+	})	
+
+	$("#mail_send_but").click(function(){
+		$("#send_form").toggle();
+	})
+})
+{/literal}
+</script>
+
+
+<div id="content">
+  <div class="pageTit">
+	  <h2>{$tpl.title}</h2>
+	  <span class="desc">{$tpl.desc}</span>
+	  {if $tpl.helper}
+	  <span class="opt"><a href="javascript:;">显示帮助</a></span>
+	  {/if}
+  </div>
+  {if $tpl.helper}
+  <div class="helper" style="display:none;">
+ 
+  </div>
+  {/if}
+
+  {if $add_result}
+	<br> Result:{$add_result}
+        <br> <a href="/add_news/view">add new one </a>
+  {/if}
+
+  {if $no_upload}
+  <h1> First,upload news image </h1>
+  <form action="/add_news/upload" enctype="multipart/form-data" method="post" name="upform">
+  上传文件:
+  <input name="upfile" type="file">
+  <input type="submit" value="上传"><br>
+  允许上传的文件类型为: {$uptypes}
+  </form>
+  {if $error}
+	<br>Error:{$error}
+  {/if}
+  {/if}
+
+  
+  {if $upload}
+  <div class="dataBox" id="send_form">
+  <form action="/add_news/add" method="post">
+	<div class="row">
+        <label for="controller" class="label">是否推荐该新闻到首页</label>
+        <input type="checkbox" name="type" value="3" />
+        </div>
+
+	<div class="row">
+        <label for="controller" class="label">新闻标题</label>
+        <input type="text" name="title" class="sInput wide" />
+        </div>
+
+	<div class="row">
+		<label class="label">内容</label>
+		<textarea class="wide" name="content" rows="10"></textarea>
+	</div>
+
+	<div class="row">
+		<label class="label">图片</label>
+               <input type="hidden" name="img_url" value="{$image_url}" />
+                {$image}
+	</div>
+	
+	<div class="row btns">
+        <input type="submit" value="提交"  />
+    </div>
+  </form>
+  </div>
+  {/if} 
+  
+</div><!-- /content -->
+{include file="footer.html"}
+
