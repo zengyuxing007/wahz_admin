@@ -9,11 +9,12 @@ $(function(){
 	var obj = $("#s_button");
 	obj.click(function(){
 		var message = $("#s_message").val();
+		var is_production = $("#s_is_production").val();
 		if(message == ''){
 			alert('发送消息不能为空');
 			return false;
 		}
-		JsRedirect(controller + '/' + action + '&message=' + message);
+		JsRedirect(controller + '/' + action + '&message=' + message + '&is_production=' + is_production );
 	})	
 
 })
@@ -34,8 +35,8 @@ $(function(){
   </div>
   {/if}
    <div> 
+	正式环境请勾选:<input type="checkbox" value="1" name="is_production" id="s_is_production" /> <br/>
 	消息：<br>
-	 <!-- <input type="TEXT" m value="" name="message" id="s_message" /> -->
     <textarea class="wide" name="message" id="s_message" rows="8" style="margin: 2px; width: 554px; height: 153px;"></textarea> <br>
 	  <input type="BUTTON" value="发送" id="s_button" />
   

@@ -8,7 +8,7 @@ class Action
     {
     }
 
-	protected function _push($token_array,$message,& $desc)
+	protected function _push($token_array,$message,$is_production,& $desc)
     {
 
 			if(!is_array($token_array) || !$message) {return false;}
@@ -23,16 +23,25 @@ class Action
 //			$message = 'My first push test!';
 
 			$ctx = stream_context_create();
-			stream_context_set_option($ctx, 'ssl', 'local_cert', ROOT_PATH.'/ca/ck.pem');
+			if($is_production){
+					stream_context_set_option($ctx, 'ssl', 'local_cert', ROOT_PATH.'/ca/ck_production.pem');
+			}else{
+					stream_context_set_option($ctx, 'ssl', 'local_cert', ROOT_PATH.'/ca/ck.pem');
+			}
 			stream_context_set_option($ctx, 'ssl', 'passphrase', $passphrase);
 
 			// Open a connection to the APNS server
-			//这个为正是的发布地址
-			//$fp = stream_socket_client(“ssl://gateway.push.apple.com:2195“, $err, $errstr, 60, //STREAM_CLIENT_CONNECT, $ctx);
-			//这个是沙盒测试地址，发布到appstore后记得修改哦
-			$fp = stream_socket_client(
-							'ssl://gateway.sandbox.push.apple.com:2195', $err,
-							$errstr, 60, STREAM_CLIENT_CONNECT|STREAM_CLIENT_PERSISTENT, $ctx);
+			$fp;
+			if($is_production){
+
+					$fp = stream_socket_client(
+									'ssl://gateway.push.apple.com:2195', $err,
+									$errstr, 60, STREAM_CLIENT_CONNECT|STREAM_CLIENT_PERSISTENT, $ctx);
+			}else{
+					$fp = stream_socket_client(
+									'ssl://gateway.sandbox.push.apple.com:2195', $err,
+									$errstr, 60, STREAM_CLIENT_CONNECT|STREAM_CLIENT_PERSISTENT, $ctx);
+			}
 
 			if (!$fp){
 					$desc = "Failed to connect: $err $errstr" . PHP_EOL;
@@ -76,6 +85,7 @@ class Action
 			Response::assign('tpl', $tpl);
 
 			$message =  Request::get('message', '0');
+			$is_production =  Request::get('is_production', 0);
 			if(!$message){
 					Response::display('push.html');
 					return;
@@ -86,7 +96,7 @@ class Action
 			$data = _model('device_info','wahz')->getAll($field,array());
 
 		    $desc='';
-			if(!$this->_push($data,$message,$desc)){
+			if(!$this->_push($data,$message,$is_production,$desc)){
 				
 			}
 			else{
