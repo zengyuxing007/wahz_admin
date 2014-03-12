@@ -191,7 +191,7 @@ class Action
 
                 //生成缩略图
 
-                $resizeimage = new resizeimage($destination_folder.$fname, "120", "120", "0",$thumbnail_folder.$fname);
+                $resizeimage = new resizeimage($destination_folder.$fname, "120", "120", "1",$thumbnail_folder.$fname);
 
 
 		if($imgpreview==1)

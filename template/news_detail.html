@@ -2,28 +2,6 @@
 {include file="sidebar.html"}
 {literal}
 <script>
-//时间代码
-$(function() {
-	$('.chosetime').datepicker({
-		dateFormat: 'yy-mm-dd', 
-		showButtonPanel: true
-	});
-
-	
-	if($("#role_id").val() == 2){
-		$("#attributebox").show();
-	}else{
-		$("#attributebox").hide();
-	}
-	$("#role_id").change(function(){
-		if($(this).val() == 2){
-			$("#attributebox").show();
-		}else{
-			$("#attributebox").hide();
-		}
-	});
-
-});
 </script>
 {/literal}
 <div id="content">
