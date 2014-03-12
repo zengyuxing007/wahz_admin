@@ -1,0 +1,64 @@
+{include file="header.html"}
+{include file="sidebar.html"}
+
+<link href="js/jquery-ui.css" rel="stylesheet" type="text/css"/>
+
+<script>
+{literal}
+$(function(){
+	$("#show_time").datepicker({ dateFormat: 'yy-mm-dd' });
+})
+function submit(){
+	var show_time = $("#show_time").val();
+	var show_desc = $("#show_desc").val();
+	if(show_time == '' && show_desc ==''){
+		alert('请选择时间并添加描述');return false;
+	}	
+	JsRedirect(controller + '/save'+  '/&show_time=' + show_time + '&show_desc=' + show_desc);
+}
+
+</script>
+{/literal}
+
+<div id="content">
+  <div class="pageTit">
+	  <h2>{$tpl.title}</h2>
+	  <span class="desc">{$tpl.desc}</span>
+	  {if $tpl.helper}
+	  <span class="opt"><a href="javascript:;">显示帮助</a></span>
+	  {/if}
+  </div>
+  
+  <div class="search">
+      播出时间:  <input type="text" name="show_time" id="show_time" value="{$starttime}"  ></input> - 
+      节目描述:  <input type="text" name="show_desc" id="show_desc" ></input>
+      <input type="button" onClick=submit() value="提交" class="sBtn" />
+  </div>
+  
+ <div class="dataBox" >
+  	<table border="0" >
+      <thead>
+        <tr class="title">
+          <th>ID</th>
+          <th>播出时间</th>
+          <th>节目描述</th>
+          <th>操作</th>
+
+        </tr>
+      </thead>
+      <tbody>
+      {foreach from=$show_list item=vo name=fo}
+      <tr {if $smarty.foreach.fo.index%2 == 1}class="even" {else} class="odd"{/if} />
+          <td>{$vo.id}</td>
+          <td>{$vo.show_time|date_format:'%Y-%m-%d'}</td>
+          <td>{$vo.desc}</td>
+          <td><a href="/show/delete/{$vo.id}">删除</a></td>
+        </tr>
+       {/foreach}
+      </tbody>
+    </table>
+  </div>
+  
+  {include file="pager.html"}
+</div><!-- /content -->
+{include file="footer.html"}
