@@ -8,11 +8,6 @@ class Action
     {
     }
 
-
-	public function info_view()
-    {
-	}
-
 	protected function _push($token_array,$message,& $desc)
     {
 
@@ -74,7 +69,7 @@ class Action
 	public function index()
 	{
 			$tpl = array(
-							'title' => 'Push notification',
+							'title' => '消息推送',
 							'desc'  => '',
 							'helper' => false //是否显示帮助信息
 						);
@@ -95,7 +90,7 @@ class Action
 				
 			}
 			else{
-				$desc = 'Push successful!!!';
+				$desc = '推送成功!!!';
 			}
 			msg($desc);
 	}
