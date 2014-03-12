@@ -2,26 +2,8 @@
 {include file="sidebar.html"}
 
 <link href="js/jquery-ui.css" rel="stylesheet" type="text/css"/>
-<script type="text/javascript" src="js/highcharts.js"></script>
 
 <script>
-{literal}
-$(function(){
-	var obj = $("#s_button");
-	obj.click(function(){
-		var kk_num = $("#s_kk_num").val();
-		if(kk_num == ''){
-			alert('kk号不正确');
-			return false;
-		}
-		JsRedirect(controller + '/' + action + '/' + kk_num);
-	})	
-
-	$("#mail_send_but").click(function(){
-		$("#send_form").toggle();
-	})
-})
-{/literal}
 </script>
 
 

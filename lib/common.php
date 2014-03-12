@@ -238,6 +238,15 @@ function get_user_info($unique_id){
 	return $str?$str:'未知';
 }
 
+function get_reward_info($reward_type){
+	$reward_info = _model('config_reward')->getField('name',array('id' => $reward_type));
+	$str = '';
+	if($reward_info and !empty($reward_info)){
+		$str = $reward_info['name'];
+	}
+	return $str?$str:"未知奖励-$reward_type";
+}
+
 function http_post($url,$data ){     
     //var_dump($url);
     //var_dump($data);

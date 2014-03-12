@@ -69,9 +69,9 @@ $(function(){
             {/if}
               <td><input type="checkbox" /></td>
               <td>{$vo.id}</td>
-			  <td>{$vo.reward_type}</td>
+			  <td>{$vo.reward_type|get_reward_info}</td>
 			  <td>{$vo.code|substr_fix:'30':'...'}</td>
-			  <td>{$vo.uid|get_user_info}</td>
+			  <td>{$vo.uid|get_user_info}-<a href="/account/info&unique_id={$vo.uid}"> more </a> </td>
 			  <td>{$vo.getTime|date_format:"%Y-%m-%d %T"}</td>  
               <td>
 			  <!-- <a href="javascript:void(0);" id="delete">确认奖品已发放</a> -->

@@ -1,0 +1,89 @@
+{include file="header.html"}
+{include file="sidebar.html"}
+
+<link href="js/jquery-ui.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="js/highcharts.js"></script>
+
+{literal}
+<script>
+/*
+$(function(){
+      $("#cardMakeDate").datepicker({ dateFormat: 'yy-mm-dd' });
+	$("#cardInvalidDate").datepicker({ dateFormat: 'yy-mm-dd' });
+})
+*/
+$(function(){
+
+	$("#make_card_but").click(function(){
+	  //var rewardID = $("#s_reward_id").val();
+	  //var receiver = $("#s_receiver").val();
+	  //if(rewardID == '' || receiver == ''){
+	    //alert('输入错误');
+	    //return false;
+	  //}
+	  $("#make_card_form").toggle();
+	})
+})
+</script>
+{/literal}
+
+
+<div id="content">
+  <div class="pageTit">
+	  <h2>{$tpl.title}</h2>
+	  <span class="desc">{$tpl.desc}</span>
+	  {if $tpl.helper}
+	  <span class="opt"><a href="javascript:;">显示帮助</a></span>
+	  {/if}
+  </div>
+  {if $tpl.helper}
+  <div class="helper" style="display:none;">
+     我爱汉字通关奖励
+  </div>
+  {/if}
+  
+    <table width="100%" border="0" cellspacing="1" cellpadding="3" class="tablewidth" align="center">
+      <tr >
+	<td height="23" ><a style='color:red; text-decoration : underline' href="/make_card/makeCard">生成奖励兑换码</a>&nbsp;&nbsp;
+	</td>
+	<td></td>
+      </tr>
+      <tr>
+	{if $error}
+	<td bgcolor="red">{$error}</td>
+	{/if}
+      </tr>
+
+  <div class="dataBox" id="make_card_form" >
+      <form action="/make_card/makeCard" method="post">
+	<input type="hidden" name="formtype" value="1" />
+	<tr bgcolor="#FFFFFF">
+	  <td id="map">生成个数
+	    <input type="text" name="num" style="width:80px" value="100" />
+	    生成日期
+	    <input type="text" name="makedate" id="cardMakeDate" style="width:80px" value="{$times}" />
+	    选择奖品
+	    <select name="reward" />
+  {foreach from=$config_reward item=vo key=key}
+	      <option value="{$vo.id}">{$vo.name}</option>
+  {/foreach}
+	    </select>
+	  </td>
+	</tr>
+	<tr>
+	</tr>
+	<tr>
+	  <td>
+
+	    失效时间,默认60天
+	    <input type="text" name="invalidTime" id="cardInvalidDate" style="width:80px" value="{$invalidTime}" />
+	    <input type="submit" id="make_card_but" value="生成" class="sBtn" />
+	  </td>
+	</tr>
+      </form>
+  </div>
+</table>
+
+  
+</div><!-- /content -->
+{include file="footer.html"}
