@@ -73,7 +73,11 @@ abstract class Model implements ArrayAccess
 
 //		echo "sql:$sql";
 
-//		print_r($option);
+		//print_r($option);
+
+//echo "values:";
+//		print_r(array_values($option));
+//echo "---";
 	
         
     	return $this->db->getRow($sql, array_values($option));   	

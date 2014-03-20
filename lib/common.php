@@ -239,6 +239,7 @@ function get_user_info($unique_id){
 }
 
 function get_reward_info($reward_type){
+	//echo "type:$reward_type";
 	$reward_info = _model('config_reward')->getField('name',array('id' => $reward_type));
 	$str = '';
 	if($reward_info and !empty($reward_info)){

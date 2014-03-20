@@ -131,7 +131,11 @@ class Db
 				if (strlen($k) > 40) {
 					$k = substr($k, 0, 40).md5($k).strlen($k);
 				}
-				$keys .= $k . ':' . $v;			
+				$value=$v;
+				if(is_array($v)){
+					$value=current($v);
+				}
+				$keys .= $k . ':' . $value;			
 			}
 			$key = 'MEM'.$table .':' .$keys;
 		}
@@ -207,10 +211,13 @@ class Db
         $sql = array_shift($args);
 		global $M_EM;
 		$key = $this->build_key($sql,$args);
+		//echo "key:$key";
 		
+///*
 		if(isset($M_EM[$key]) and $M_EM[$key]){
 			return $M_EM[$key];
 		}
+//*/
         $query = $this->execute($sql, $args);
 
         return $M_EM[$key] = $query->fetch(PDO::FETCH_ASSOC);
