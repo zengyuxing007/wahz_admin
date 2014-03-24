@@ -78,7 +78,7 @@ $(function(){
 				{foreach from=$reward_info item=vo}
 				<p class="block">
 				获取时间：{$vo.getTime|date_format:"%Y-%m-%d %T"} 
-				奖品类型： {$vo.reward_type|config_name:'config_reward'}--{$vo.reward_type}
+				奖品类型： {$vo.reward_type|get_reward_info}--{$vo.reward_type}
                 兑换码：{$vo.code}
 				状态： {if $vo.is_use== 2} 奖品已邮寄 {else} 用户信息核实中 {/if}
 				</p>

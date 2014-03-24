@@ -12,6 +12,9 @@ class Action
 				'image/jpg',
 				'image/jpeg',
 				'image/png',
+                'image/pjpeg',
+				'image/x-png',
+                'image/bmp',
 				'image/gif',
 				);
 		$this->tpl = array(
