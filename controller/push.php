@@ -13,40 +13,8 @@ class Action
 
 			if(!is_array($token_array) || !$message) {return false;}
 
-			//var_dump($token_array);
-			//exit;
-
 			// Put your private key's passphrase here:
 			$passphrase = 'jesse';
-
-			// Put your alert message here:
-//			$message = 'My first push test!';
-
-			$ctx = stream_context_create();
-			if($is_production){
-					stream_context_set_option($ctx, 'ssl', 'local_cert', ROOT_PATH.'/ca/ck_production.pem');
-			}else{
-					stream_context_set_option($ctx, 'ssl', 'local_cert', ROOT_PATH.'/ca/ck.pem');
-			}
-			stream_context_set_option($ctx, 'ssl', 'passphrase', $passphrase);
-
-			// Open a connection to the APNS server
-			$fp;
-			if($is_production){
-
-					$fp = stream_socket_client(
-									'ssl://gateway.push.apple.com:2195', $err,
-									$errstr, 60, STREAM_CLIENT_CONNECT|STREAM_CLIENT_PERSISTENT, $ctx);
-			}else{
-					$fp = stream_socket_client(
-									'ssl://gateway.sandbox.push.apple.com:2195', $err,
-									$errstr, 60, STREAM_CLIENT_CONNECT|STREAM_CLIENT_PERSISTENT, $ctx);
-			}
-
-			if (!$fp){
-					$desc = "Failed to connect: $err $errstr" . PHP_EOL;
-					return false;
-			}
 
 			//echo 'Connected to APNS' . PHP_EOL;
 
@@ -60,16 +28,46 @@ class Action
 			$payload = json_encode($body);
 
 			foreach ($token_array as $key => $val){
-			
-					//echo $val['device_token'];
-					//exit;
-					// Build the binary notification
-					$msg = chr(0) . pack('n', 32) . pack('H*', $val['device_token']) . pack('n', strlen($payload)) . $payload;
+					$result = 0;
 
-					// Send it to the server
-					$result = fwrite($fp, $msg, strlen($msg));
+					$ctx = stream_context_create();
+					if($is_production){
+							stream_context_set_option($ctx, 'ssl', 'local_cert', ROOT_PATH.'/ca/ck_production.pem');
+					}else{
+							stream_context_set_option($ctx, 'ssl', 'local_cert', ROOT_PATH.'/ca/ck.pem');
+					}
+					stream_context_set_option($ctx, 'ssl', 'passphrase', $passphrase);
+
+
+					// Open a connection to the APNS server
+					$fp;
+					if($is_production){
+
+							$fp = stream_socket_client(
+											'ssl://gateway.push.apple.com:2195', $err,
+											$errstr, 60, STREAM_CLIENT_CONNECT|STREAM_CLIENT_PERSISTENT, $ctx);
+					}else{
+							$fp = stream_socket_client(
+											'ssl://gateway.sandbox.push.apple.com:2195', $err,
+											$errstr, 60, STREAM_CLIENT_CONNECT|STREAM_CLIENT_PERSISTENT, $ctx);
+					}
+
+					if (!$fp){
+							$desc = "Failed to connect: $err $errstr" . PHP_EOL;
+							return false;
+					}
+
+					// Build the binary notification
+					try{
+							$msg = chr(0) . pack('n', 32) . pack('H*', $val['device_token']) . pack('n', strlen($payload)) . $payload;
+							// Send it to the server
+							$result = fwrite($fp, $msg, strlen($msg));
+					//		echo "token:".$val['device_token']."\tresult:$result</br>";
+					} catch (Exception $e){
+							echo "exception:".$e->getMessage();
+					}
+			        fclose($fp);
 			}
-			fclose($fp);
 			return true;
 
 	}
@@ -94,6 +92,18 @@ class Action
 			$field = "device_token";
 
 			$data = _model('device_info','wahz')->getAll($field,array());
+			//var_dump($data);
+			//exit;
+
+			//for test
+			/*
+			$data = array(
+			'0' => array('device_token' => '99ddeba162b801f2069ee94d9f28ce72ed257c6520ba7d0a8aebdde0fa2640e5'),
+			'1' => array('device_token' => '99ddeba162b801f2069ee94d9f28ce72ed257c6520ba7d0a8aebdde0fa2640e5'),
+			);
+			var_dump($data);
+			exit;
+*/
 
 		    $desc='';
 			if(!$this->_push($data,$message,$is_production,$desc)){
