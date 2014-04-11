@@ -20,12 +20,13 @@ class Action
 
 			// Create the payload body
 			$body['aps'] = array(
-							'alert' => $message,
+							'alert' => urlencode($message),
 							'sound' => 'default'
 							);
 
 			// Encode the payload as JSON
 			$payload = json_encode($body);
+            $payload = urldecode($payload);
 
 			foreach ($token_array as $key => $val){
 					$result = 0;
